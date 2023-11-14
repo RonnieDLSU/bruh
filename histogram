@@ -1,0 +1,146 @@
+#include <stdio.h>
+
+/** TO DO: Create the implementation for this function. [5 pts]
+ * This function returns the place value of the given positive number.  For example,  
+ *  if num is 456, the function returns 100.  Another example is if num is 709134, 
+ *  the function returns 100000.
+ * @param num positive integer
+ * @return the place value of num
+ */
+int getPlace(int num) 
+{
+	int place=1;
+	int remainder=num;
+	while(remainder>9)
+	{
+	place*=10;
+	remainder=num/place;
+	}
+	
+	return place;
+}
+
+
+/** TO DO: Create the implementation for this function. [10 pts]
+  * This function returns the updated number after the nTimes number of iterations. It also
+  * displays the rotated number for each iteration. Note that for each iteration,
+  * the rightmost digit becomes the the leftmost digit.
+  * For example, if num is 456 and nTimes is 1, the function displays 1: 645 and returns 645.  
+  * Another example is if num is 709134 and nTimes is 3, the function displays 
+  * 1: 470913, 2: 347091 , 3: 134709 and returns 134709.
+  * @param num the original number to be rotated
+  * @param nTimes the number times num will be rotated to the right
+  * @return rotated number
+  */
+int rotateRight(int num, int nTimes) 
+{
+	int rightmost, placevalue, remainder, i;
+	placevalue=getPlace(num);
+	for(i=1; i<=nTimes; i++)
+	{
+		rightmost=num%10;
+		remainder=num/10;
+		num = rightmost*placevalue+remainder;
+		printf("%d: %d\n", i, num);
+	}
+	return num;
+}
+
+
+/** TO DO: Create the implementation for this function. [10 pts]
+  * This function returns the updated number after the nTimes number of iterations. It also
+  * displays the rotated number for each iteration. Note that for each iteration,
+  * the leftmost digit becomes the the rightmost digit.
+  * For example, if num is 456 and nTimes is 1, the function displays 1: 564 and returns 564.  
+  * Another example is if num is 709134 and nTimes is 3, the function displays 
+  * 1: 91347, 2: 913470 , 3: 134709 and returns 134709.
+  * @param num the original number to be rotated
+  * @param nTimes the number times num will be rotated to the left
+  * @return rotated number
+  */  
+int rotateLeft(int num, int nTimes) 
+{
+	int leftmost, placevalue, remainder, i;
+	placevalue=getPlace(num);
+	for(i=1; i<=nTimes; i++)
+	{
+		leftmost=num/placevalue;
+		remainder=num%placevalue;
+		num=10*remainder+leftmost;
+		printf("%d: %d\n", i, num);
+	}
+	return num;
+}
+
+/** TO DO: Create the implementation for this function. [20 pts]
+  * This function displays the vertical histogram of num.
+  * Hint: There is a nested loop as part of the solution, unless
+  *       you decide to create a separate function to abstract the
+  *       nested loop.
+  * @param num the number which will be used to display the histogram
+  */ 
+void histogram(int num)
+{
+	// determine number, highest number(row), number of places(col)
+}
+
+
+/** TO DO: Debug this main() function. [5 pts]
+  * This function gets an input integer to represent the option chosen. Option 1 is to 
+  * rotate right, option 2 is to rotate left, and option 3 is to exit.  Any other given 
+  * value for the option should result to an error message.
+  * For either option 1 or 2, an input number should be asked from the user.  The program
+  * should then check if this input is positive.
+  * If it is not positive, indicate a message and the program proceeds to ask for another
+  * option.  If it is positive, also ask for another number to represent   
+  * number of times to rotate.  If this last number is not positive, no change is 
+  * done to the given number, but if the number of time of rotation is positive, the   
+  * first input number is rotated multiple times depending on the second input. 
+  * Note that the result of the function call to either rotateRight() or rotateLeft()
+  * should be passed to the function histogram() where the vertical histogram will be 
+  * displayed.    
+  * This process is repeated as long as the input option is not 3.
+  */
+int main() 
+{
+    int opt, num, times; 
+
+    do
+    {
+       printf("Menu options: \n");
+       printf("1 - Rotate Right\n");
+       printf("2 - Rotate Left\n");
+       printf("3 - Exit\n");
+       printf("\nEnter option: ");
+       scanf("%d", &opt);
+
+       if (!(opt > 0 && opt <4))
+         printf("Invalid option\n");
+       else if (opt != 3)
+	   {
+           printf("Enter number: ");
+           scanf("%d", &num);
+       
+           if ( num > 0 )
+           {
+               printf("Enter number of times : ");
+               scanf("%d", &times);
+                 
+               switch (opt)
+               {
+                    case 1: num = rotateRight(num, times); break;
+                    case 2: num = rotateLeft(num, times); 
+               }
+               printf("\nVertical Histogram:\n");
+              // histogram(num);
+              
+           }
+           else printf("Not positive\n\n");
+
+       }         
+
+    } while (opt == 3);
+
+    return 0;
+}
+
